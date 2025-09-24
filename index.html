@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
     <!-- Chosen Palette: Slate & Blue -->
-    <!-- Application Structure Plan: The application uses a tab-based navigation system to load dictionary data chunks asynchronously from external JSON files. A sticky search bar allows for real-time filtering of the currently loaded dataset. The file path logic has been updated to handle 'basic.json' from the root directory, while other dictionary files are loaded from a 'json/' subdirectory, correcting the previous loading issue. This structure remains efficient and maintainable. -->
-    <!-- Visualization & Content Choices: Report Info: Trilingual dictionary entries. Goal: Display definitions clearly. Presentation Method: HTML cards. Interaction: Users click tabs to fetch JSON data. A text input allows for live filtering. Justification: The core interaction is sound. The primary fix is correcting the fetch path for 'basic.json' to ensure the user-provided file loads correctly, making the "Basic Words" feature functional as intended. Library/Method: Vanilla JavaScript for DOM manipulation, event handling, and fetching data. Tailwind CSS for styling. -->
+    <!-- Application Structure Plan: The application uses a tab-based navigation system. Based on user feedback, the file path logic has been unified. Now, all dictionary files, including 'basic.json', are correctly loaded from the 'json/' subdirectory. This simplifies the code and resolves the previous loading issue while maintaining an efficient, on-demand data loading structure. -->
+    <!-- Visualization & Content Choices: Report Info: Trilingual dictionary entries. Goal: Display definitions clearly. Presentation Method: HTML cards. Interaction: Users click tabs to fetch JSON data from a consistent '/json/' path. A text input allows for live filtering. Justification: Unifying the file path logic makes the data loading mechanism more robust and easier to maintain. This change directly addresses the user's issue and ensures all data sources are handled identically. Library/Method: Vanilla JavaScript for DOM manipulation, event handling, and fetching data. Tailwind CSS for styling. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,14 +78,14 @@
             {key: 'ক', char: 'ক'}, {key: 'খ', char: 'খ'}, {key: 'গ', char: 'গ'}, 
             {key: 'ঘ', char: 'ঘ'}, {key: 'ঙ', char: 'ঙ'}, {key: 'চ', char: 'চ'}, 
             {key: 'ছ', char: 'ছ'}, {key: 'জ', char: 'জ'}, {key: 'ঝ', char: 'ঝ'},
-            {key: 'ঞ', char: 'ঞ'}, {key: 'ט', char: 'ט'}, {key: 'ঠ', char: 'ঠ'}, 
+            {key: 'ঞ', char: 'ঞ'}, {key: 'ট', char: 'ট'}, {key: 'ঠ', char: 'ঠ'}, 
             {key: 'ড', char: 'ড'}, {key: 'ঢ', char: 'ঢ'}, {key: 'ণ', char: 'ণ'},
             {key: 'ত', char: 'ত'}, {key: 'থ', char: 'থ'}, {key: 'দ', char: 'দ'}, 
             {key: 'ধ', char: 'ধ'}, {key: 'ন', char: 'ন'}, {key: 'প', char: 'প'}, 
             {key: 'ফ', char: 'ফ'}, {key: 'ব', char: 'ব'}, {key: 'ভ', char: 'ভ'}, 
-            {key: 'מ', char: 'מ'}, {key: 'য', char: 'য'}, {key: 'র', char: 'র'}, 
-            {key: 'ל', char: 'ל'}, {key: 'ש', char: 'ש'}, {key: 'ষ', char: 'ষ'},
-            {key: 'ס', char: 'ס'}, {key: 'ה', char: 'ה'}
+            {key: 'ম', char: 'ম'}, {key: 'য', char: 'য'}, {key: 'র', char: 'র'}, 
+            {key: 'ল', char: 'ল'}, {key: 'শ', char: 'ש'}, {key: 'ষ', char: 'ষ'},
+            {key: 'স', char: 'স'}, {key: 'হ', char: 'হ'}
         ];
         
         const searchInput = document.getElementById('searchInput');
@@ -156,8 +156,8 @@
             searchInput.disabled = true;
             searchInput.value = '';
             
-            // basic.json is at the root, others are in the /json/ folder.
-            const filePath = key === 'basic' ? 'basic.json' : `json/${key}.json`;
+            // All dictionary files are in the /json/ folder.
+            const filePath = `json/${key}.json`;
             searchInput.placeholder = `${filePath} を読込中...`;
 
             try {
